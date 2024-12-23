@@ -5,7 +5,7 @@ import CateMenu from "./CateMenu";
 import { useNavStore } from "../../store/navStore";
 
 const Nav = () => {
-  const { navItems } = useNavStore(); //상태 가져오기
+  const { navItems } = useNavStore(); // 상태 가져오기
 
   return (
     <Box
