@@ -1,7 +1,7 @@
 // /routers/RoutesConfig.tsx
 import { Route, Routes } from "react-router-dom";
-import Makeup from "../pages/category/Makeup"; // Makeup 페이지
-import Skincare from "../pages/category/Skincare"; // Skincare 페이지
+import Makeup from "../pages/category/Makeup";
+import Skincare from "../pages/category/Skincare";
 import New from "../pages/New";
 import Best from "../pages/Best";
 import Special from "../pages/Special";
@@ -10,6 +10,7 @@ import MainPage from "../pages/MainPage";
 import Clensing from "../pages/category/Clensing";
 import Suncare from "../pages/category/Suncare";
 import Haircare from "../pages/category/Haircare";
+import ItemDetail from "../pages/item/ItemDetail";
 
 const RoutesConfig = () => (
   <Routes>
@@ -23,6 +24,7 @@ const RoutesConfig = () => (
     <Route path="/best" element={<Best />} />
     <Route path="/special" element={<Special />} />
     <Route path="/brands" element={<Brands />} />
+    <Route path="/item/:itemKey" element={<ItemDetail />} />
   </Routes>
 );
 

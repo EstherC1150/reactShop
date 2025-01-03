@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import CateMenu from "./CateMenu";
 import { useNavStore } from "../../store/navStore";
 
@@ -11,8 +12,9 @@ const Nav = () => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "left",
+        justifyContent: "flex-start",
         backgroundColor: "#F5F5F5",
+        alignItems: "center",
         py: 1,
       }}
     >
@@ -22,12 +24,16 @@ const Nav = () => {
       {/* 네브 메뉴들 */}
       {navItems.map((item) => (
         <Box key={item.path} sx={{ mx: 2 }}>
-          <Link
+          <MuiLink
+            component={RouterLink}
             to={item.path}
-            style={{ textDecoration: "none", color: "#111111" }}
+            style={{
+              textDecoration: "none",
+              color: "rgb(52, 52, 52)",
+            }}
           >
             {item.label}
-          </Link>
+          </MuiLink>
         </Box>
       ))}
     </Box>

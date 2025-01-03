@@ -25,6 +25,21 @@ const CateMenu = () => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        disableRipple // 리플 효과 제거
+        sx={{
+          display: "flex",
+          alignItems: "center", // 수직 중앙 정렬
+          padding: "6px 16px", // 기본 padding 조정
+          lineHeight: "normal", // line-height를 기본 값으로 설정
+          marginTop: "6.5px",
+          color: "#6e6e6e",
+          fontWeight: "bold",
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: "transparent !important", // hover 시 배경색 강제로 투명하게
+            color: "#1976d2",
+          },
+        }}
       >
         카테고리
       </Button>
@@ -42,7 +57,12 @@ const CateMenu = () => {
           <MenuItem key={item.path} onClick={handleClose}>
             <Link
               to={item.path}
-              style={{ textDecoration: "none", color: "#111111" }}
+              style={{
+                textDecoration: "none",
+                color: "rgb(52, 52, 52)",
+                fontWeight: 500,
+                fontSize: "14px",
+              }}
             >
               {item.label}
             </Link>
