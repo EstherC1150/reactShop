@@ -7,7 +7,7 @@ export const getItems = async (
   name: string
 ): Promise<Item[]> => {
   const response = await fetch(
-    `http://192.168.0.2:3000/api/v1/items/${categoryId}?${
+    `http://192.168.0.17:3000/api/v1/items/${categoryId}?${
       minPrice ? `minPrice=${minPrice}` : ""
     }&${maxPrice ? `maxPrice=${maxPrice}` : ""}&${name ? `name=${name}` : ""}`
   );
@@ -16,7 +16,7 @@ export const getItems = async (
 
 export const getItemDetail = async (itemKey: number): Promise<Item> => {
   const response = await fetch(
-    `http://192.168.0.2:3000/api/v1/item/${itemKey}`
+    `http://192.168.0.17:3000/api/v1/item/${itemKey}`
   );
   const data = await response.json();
   // console.log("API 응답:", data);

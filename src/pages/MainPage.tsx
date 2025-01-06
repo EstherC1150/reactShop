@@ -1,7 +1,13 @@
 import React from "react";
+import Banner from "../components/main/Banner";
+import { Box } from "@mui/material";
 
 const MainPage = () => {
-  return <div>여기는 초기 메인 페이지다 이사람들아아아악</div>;
+  return (
+    <Box>
+      <Banner />
+    </Box>
+  );
 };
 
 export default MainPage;
