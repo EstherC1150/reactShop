@@ -5,10 +5,13 @@ import { Item } from "../../types/item.types";
 import { getItems } from "../../apis/item";
 import { calculateDiscountRate } from "../../utils/discount";
 import CategoryLayout from "../../components/layout/CategoryLayout";
+import useSearchStore from "../../store/searchStore";
+import EmptyResults from "../../components/item/EmptyResults";
 
 const Skincare = () => {
   const [items, setItems] = useState<Item[]>([]);
   const { priceRange, categories } = useFilterStore();
+  const { searchKeyword, triggerSearch } = useSearchStore();
 
   // 선택된 카테고리 가져오기
   const selectedCategories = useMemo(
@@ -23,30 +26,43 @@ const Skincare = () => {
       ? `&categories=${selectedCategories.join(",")}`
       : "";
 
-    getItems(1, priceRange.minCost, priceRange.maxCost).then((data) => {
+    getItems(
+      1,
+      priceRange.minCost,
+      priceRange.maxCost,
+      triggerSearch ? searchKeyword : ""
+    ).then((data) => {
       setItems(data);
       console.log(data);
     });
-  }, [priceRange.minCost, priceRange.maxCost, selectedCategories]);
-
-  if (!items.length) {
-    return <div>Loading...</div>;
-  }
+  }, [
+    priceRange.minCost,
+    priceRange.maxCost,
+    selectedCategories,
+    triggerSearch,
+  ]);
 
   return (
     <CategoryLayout totalItems={items.length}>
-      {items.map((item) => (
-        <ItemCard
-          key={item.itemKey}
-          itemKey={item.itemKey}
-          imageUrl="/image/testimg.jpg"
-          name={item.name}
-          description={item.content || "설명이 없습니다."}
-          originalPrice={item.price}
-          discountedPrice={item.sale}
-          discountRate={calculateDiscountRate(item.price, item.sale)}
+      {items.length === 0 ? (
+        <EmptyResults
+          triggerSearch={triggerSearch}
+          searchKeyword={searchKeyword}
         />
-      ))}
+      ) : (
+        items.map((item) => (
+          <ItemCard
+            key={item.itemKey}
+            itemKey={item.itemKey}
+            imageUrl="/image/testimg.jpg"
+            name={item.name}
+            description={item.content || "설명이 없습니다."}
+            originalPrice={item.price}
+            discountedPrice={item.sale}
+            discountRate={calculateDiscountRate(item.price, item.sale)}
+          />
+        ))
+      )}
     </CategoryLayout>
   );
 };

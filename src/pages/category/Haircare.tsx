@@ -5,10 +5,12 @@ import { Item } from "../../types/item.types";
 import { getItems } from "../../apis/item";
 import { calculateDiscountRate } from "../../utils/discount";
 import CategoryLayout from "../../components/layout/CategoryLayout";
+import useSearchStore from "../../store/searchStore";
 
 const Haircare = () => {
   const [items, setItems] = useState<Item[]>([]);
   const { priceRange, categories } = useFilterStore();
+  const { searchKeyword } = useSearchStore();
   const selectedCategories = useMemo(
     () =>
       categories.filter((option) => option.checked).map((option) => option.id),
@@ -20,11 +22,18 @@ const Haircare = () => {
       ? `&categories=${selectedCategories.join(",")}`
       : "";
 
-    getItems(5, priceRange.minCost, priceRange.maxCost).then((data) => {
-      setItems(data);
-      console.log(data);
-    });
-  }, [priceRange.minCost, priceRange.maxCost, selectedCategories]);
+    getItems(5, priceRange.minCost, priceRange.maxCost, searchKeyword).then(
+      (data) => {
+        setItems(data);
+        console.log(data);
+      }
+    );
+  }, [
+    priceRange.minCost,
+    priceRange.maxCost,
+    selectedCategories,
+    searchKeyword,
+  ]);
 
   if (!items.length) {
     return <div>Loading...</div>;

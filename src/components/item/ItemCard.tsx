@@ -27,13 +27,13 @@ function ItemCard({
   const handleCardClick = (itemKey: number) => {
     console.log("아이템 클릭:", itemKey);
     console.log("이동할 경로:", `/item/${itemKey}`);
-    console.log("상품 정보:", {
-      상품명: name,
-      설명: description,
-      원가: originalPrice,
-      할인가: discountedPrice,
-      할인율: discountRate,
-    });
+    // console.log("상품 정보:", {
+    //   상품명: name,
+    //   설명: description,
+    //   원가: originalPrice,
+    //   할인가: discountedPrice,
+    //   할인율: discountRate,
+    // });
     navigate(`/item/${itemKey}`);
   };
 

@@ -3,12 +3,13 @@ import { Item } from "../types/item.types";
 export const getItems = async (
   categoryId: number,
   minPrice: number,
-  maxPrice: number
+  maxPrice: number,
+  name: string
 ): Promise<Item[]> => {
   const response = await fetch(
     `http://192.168.0.2:3000/api/v1/items/${categoryId}?${
       minPrice ? `minPrice=${minPrice}` : ""
-    }&${maxPrice ? `maxPrice=${maxPrice}` : ""}`
+    }&${maxPrice ? `maxPrice=${maxPrice}` : ""}&${name ? `name=${name}` : ""}`
   );
   return response.json();
 };

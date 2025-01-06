@@ -1,9 +1,38 @@
-import { AppBar, Box, InputBase, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  InputBase,
+  Toolbar,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
 import { Link } from "react-router-dom";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import useSearchStore from "../../store/searchStore";
 
 const Header = () => {
+  const { searchKeyword, setSearchKeyword, setTriggerSearch } =
+    useSearchStore();
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+    setTriggerSearch(false);
+  };
+
+  const handleSearchClick = () => {
+    if (searchKeyword.trim()) {
+      setTriggerSearch(true);
+    }
+  };
+
+  const handleClearClick = () => {
+    setSearchKeyword("");
+    setTriggerSearch(false);
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -51,10 +80,34 @@ const Header = () => {
         >
           <InputBase
             placeholder="뷰티 상품을 검색하세요"
+            value={searchKeyword}
+            onChange={handleSearch}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSearchClick();
+              }
+            }}
             inputProps={{ "aria-label": "search" }}
             sx={{ flexGrow: 1 }}
+            endAdornment={
+              searchKeyword && (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={handleClearClick}
+                    sx={{ padding: "2px" }}
+                  >
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
           />
-          <SearchIcon color="action" />
+          <SearchIcon
+            color="action"
+            sx={{ cursor: "pointer", ml: 1 }}
+            onClick={handleSearchClick}
+          />
         </Box>
       </Toolbar>
     </AppBar>
