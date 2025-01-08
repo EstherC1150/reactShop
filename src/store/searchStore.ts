@@ -5,6 +5,7 @@ interface SearchStore {
   setSearchKeyword: (keyword: string) => void;
   triggerSearch: boolean;
   setTriggerSearch: (trigger: boolean) => void;
+  initSearch: () => void;
 }
 
 const useSearchStore = create<SearchStore>((set) => ({
@@ -12,6 +13,7 @@ const useSearchStore = create<SearchStore>((set) => ({
   setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
   triggerSearch: false,
   setTriggerSearch: (trigger) => set({ triggerSearch: trigger }),
+  initSearch: () => set({ searchKeyword: "", triggerSearch: false }),
 }));
 
 export default useSearchStore;

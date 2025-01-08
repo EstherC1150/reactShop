@@ -7,6 +7,7 @@ import Special from "../pages/Special";
 import Brands from "../pages/Brands";
 import MainPage from "../pages/MainPage";
 import ItemDetail from "../pages/item/ItemDetail";
+import SearchPage from "../pages/SearchPage";
 
 const RoutesConfig = () => (
   <Routes>
@@ -17,6 +18,7 @@ const RoutesConfig = () => (
     <Route path="/special" element={<Special />} />
     <Route path="/brands" element={<Brands />} />
     <Route path="/item/:itemKey" element={<ItemDetail />} />
+    <Route path="/search" element={<SearchPage />} />
   </Routes>
 );
 

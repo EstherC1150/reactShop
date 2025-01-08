@@ -9,33 +9,62 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import useSearchStore from "../../store/searchStore";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const { searchKeyword, setSearchKeyword, setTriggerSearch } =
-    useSearchStore();
+  const [localSearchKeyword, setLocalSearchKeyword] = useState("");
+  const { setSearchKeyword, setTriggerSearch } = useSearchStore();
+  const navigate = useNavigate();
+  const location = useLocation(); // 리액트 방식으로 현재 URL 가져오기
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-    setTriggerSearch(false);
+    setLocalSearchKeyword(e.target.value);
   };
 
   const handleSearchClick = () => {
-    if (searchKeyword.trim()) {
+    if (localSearchKeyword.trim()) {
+      setSearchKeyword(localSearchKeyword);
       setTriggerSearch(true);
+
+      // 현재 경로가 /category로 시작하는지 확인
+      if (location.pathname.startsWith("/category")) {
+        // 카테고리 페이지 내에서 검색 - 현재 URL 유지하고 검색어만 추가
+        const currentParams = new URLSearchParams(location.search);
+        currentParams.set("keyword", localSearchKeyword);
+        navigate(`${location.pathname}?${currentParams.toString()}`);
+      } else {
+        // 메인 페이지나 다른 페이지에서 검색 - 전체 검색 페이지로 이동
+        navigate(`/search?keyword=${encodeURIComponent(localSearchKeyword)}`);
+      }
     }
   };
 
   const handleClearClick = () => {
+    setLocalSearchKeyword("");
     setSearchKeyword("");
     setTriggerSearch(false);
   };
 
+  const resetSearch = () => {
+    setLocalSearchKeyword("");
+    setSearchKeyword("");
+    setTriggerSearch(false);
+  };
+
+  const handleLogoClick = () => {
+    resetSearch();
+  };
+
+  useEffect(() => {
+    setLocalSearchKeyword("");
+  }, [location]);
+
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar position="static" sx={{ boxShadow: "none" }}>
+      <Toolbar sx={{ backgroundColor: "#ffffff" }}>
         <Box
           sx={{
             display: "flex",
@@ -44,24 +73,28 @@ const Header = () => {
         >
           <Link
             to="/"
+            onClick={handleLogoClick}
             style={{
               display: "flex",
               alignItems: "center",
-              textDecoration: "none", // 밑줄 제거
-              color: "inherit", // 텍스트와 아이콘 색상 유지
+              textDecoration: "none",
+              color: "inherit",
             }}
           >
             <ShoppingBasketOutlinedIcon
               sx={{
-                fontSize: 30, // 아이콘 크기
-                marginRight: 0.5, // 아이콘과 텍스트 간격
+                fontSize: 30,
+                marginRight: 0.5,
+                color: "#161616",
               }}
               aria-label="menu"
             />
             <Typography
               variant="h6"
               sx={{
-                display: "inline", // 텍스트 길이에 맞게 영역 제한
+                display: "inline",
+                color: "#161616",
+                fontWeight: "600",
               }}
             >
               ReactShop
@@ -72,7 +105,7 @@ const Header = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            border: "1px solid",
+            border: "1px solid #e0e0e0",
             borderRadius: "4px",
             padding: "0 8px",
             marginLeft: "auto",
@@ -80,9 +113,9 @@ const Header = () => {
         >
           <InputBase
             placeholder="뷰티 상품을 검색하세요"
-            value={searchKeyword}
+            value={localSearchKeyword}
             onChange={handleSearch}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSearchClick();
               }
@@ -90,7 +123,7 @@ const Header = () => {
             inputProps={{ "aria-label": "search" }}
             sx={{ flexGrow: 1 }}
             endAdornment={
-              searchKeyword && (
+              localSearchKeyword && (
                 <InputAdornment position="end">
                   <IconButton
                     size="small"

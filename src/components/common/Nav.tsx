@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@mui/material";
 import { Link as MuiLink } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
@@ -13,9 +12,12 @@ const Nav = () => {
       sx={{
         display: "flex",
         justifyContent: "flex-start",
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#ffffff",
         alignItems: "center",
-        py: 1,
+        paddingBottom: 1,
+        position: "relative", // 추가된 부분
+        zIndex: 1, // 추가된 부분
+        boxShadow: "0px 3px 4px rgba(0, 0, 0, 0.1)", // bottom 부분에만 보이도록 조정
       }}
     >
       {/* 카테고리메뉴 */}

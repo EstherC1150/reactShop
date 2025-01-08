@@ -32,6 +32,8 @@ const CategoryPage = () => {
   );
 
   useEffect(() => {
+    if (!triggerSearch && searchKeyword) return; // 검색 트리거가 false면 API 호출 안함
+
     getItems(
       Number(categoryName[categoryId as keyof typeof categoryName]),
       priceRange.minCost,
@@ -47,10 +49,6 @@ const CategoryPage = () => {
     selectedCategories,
     triggerSearch,
   ]);
-
-  useEffect(() => {
-    console.log(categoryId);
-  }, [categoryId]);
 
   // 카테고리별 이미지 매핑
   const categoryImages: { [key: number]: string } = {

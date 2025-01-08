@@ -1,18 +1,20 @@
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
 
 // A custom theme for this app
 const theme = createTheme({
-  cssVariables: true,
-  palette: {
-    primary: {
-      main: "#556cd6",
-    },
-    secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: red.A400,
+  typography: {
+    fontFamily: "GmarketSans", // 기본 폰트 설정
+    fontWeightLight: 300,
+    fontWeightRegular: 500,
+    fontWeightBold: 700,
+  },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          fontFamily: "GmarketSans",
+        },
+      },
     },
   },
 });

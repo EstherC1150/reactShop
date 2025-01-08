@@ -127,9 +127,9 @@ const ItemDetail = () => {
               fullWidth
               sx={{
                 height: "48px",
-                backgroundColor: "primary.main",
+                backgroundColor: "#161616",
                 "&:hover": {
-                  backgroundColor: "primary.dark",
+                  backgroundColor: "#474747",
                 },
               }}
             >

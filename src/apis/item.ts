@@ -7,16 +7,43 @@ export const getItems = async (
   name: string
 ): Promise<Item[]> => {
   const response = await fetch(
-    `http://192.168.0.17:3000/api/v1/items/${categoryId}?${
+    `http://192.168.0.2:3000/api/v1/items/${categoryId}?${
       minPrice ? `minPrice=${minPrice}` : ""
     }&${maxPrice ? `maxPrice=${maxPrice}` : ""}&${name ? `name=${name}` : ""}`
   );
   return response.json();
 };
 
+export const getItemName = async (name: string): Promise<Item[]> => {
+  try {
+    console.log("검색어:", name);
+    const url = `http://192.168.0.2:3000/api/v1/item/search?name=${name}`;
+    console.log("요청 URL:", url);
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("API Error Response:", errorData);
+      throw new Error(`API 호출 실패: ${errorData}`);
+    }
+
+    const data = await response.json();
+    console.log("검색 결과 데이터:", {
+      총개수: data.length,
+      아이템목록: data,
+      요청URL: url,
+    });
+    return data;
+  } catch (error) {
+    console.error("API 오류 상세:", error);
+    throw error;
+  }
+};
+
 export const getItemDetail = async (itemKey: number): Promise<Item> => {
   const response = await fetch(
-    `http://192.168.0.17:3000/api/v1/item/${itemKey}`
+    `http://192.168.0.2:3000/api/v1/item/${itemKey}`
   );
   const data = await response.json();
   // console.log("API 응답:", data);
