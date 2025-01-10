@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import useSearchStore from "../../store/searchStore";
 import { useEffect, useState } from "react";
@@ -23,7 +23,6 @@ const Header = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalSearchKeyword(e.target.value);
   };
-
   const handleSearchClick = () => {
     if (localSearchKeyword.trim()) {
       setSearchKeyword(localSearchKeyword);
